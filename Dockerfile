@@ -1,14 +1,17 @@
-FROM node:20-slim
+FROM node:slim
 
 ENV PATH="$PATH:node_modules/.bin"
-
-RUN apt-get update && apt-get install -y make
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
 
-COPY . .
+COPY server ./server/
+
+COPY public ./public/
+
+COPY bin ./bin/
+
+RUN npm ci
 
 CMD ["bin/start.sh"]
